@@ -1,0 +1,40 @@
+{% extends 'lit_contest/base.html' %}
+
+{% block site_news %}
+        <div class="post-news">
+            <div class="post-title">
+                <h4> {{ news.title }} </h4>
+
+                <!-- Информация о посте для нормальных разрешений -->
+                <div id="t" class="post-info">
+
+                    <div id="i"><span class="label label-warning">{{ news.categories.name }}</span><h5 class="inline-h5">&nbsp;{{ news.dateCreated }}</h5></div>
+
+                    <div id="i"><h5 style="margin-right:22px;">Опубликовал: <a href="">{{ news.author.username }}</a></h5></div>
+
+                </div>
+
+            </div>
+
+            <hr style="border-top: 1px solid #C08A3E;margin-top:-10px;margin-bottom:15px;">
+
+            {% autoescape off %}
+
+            <div id="post">
+                {{ news.description }}
+            </div>
+
+            {% endautoescape %}
+
+            <hr style="margin-bottom:0px;">
+
+            <div class="social-likes"  style="float: left;margin-top: 1px;margin-bottom: 1px;" data-counters="no" data-url="http://{{ request.META.HTTP_HOST }}{% url 'full_description_news' news.dateCreated.year news.dateCreated.month news.dateCreated.day news.id %}">
+                <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>
+                <div class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</div>
+                <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</div>
+                <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</div>
+                <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</div>
+            </div>
+
+        </div>
+{% endblock %}

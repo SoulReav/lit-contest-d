@@ -1,0 +1,41 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        <input autofocus="autofocus" name="login" type="text" class="form-control" placeholder="Логин">
+        <br>
+        <input name="password" type="password" class="form-control" placeholder="Пароль">
+        <br>
+        <input hidden="True" name="remember" type="checkbox" checked="checked">
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;&nbsp;{% trans "Sign In" %}&nbsp;&nbsp;
+        </button>
+        &nbsp;&nbsp;<a class="btn btn-info" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+    </form>
+    {% if form.errors %}
+        <ul>
+            {% for field in form %}
+                {% if field.errors.0 == "Обязательное поле." %}
+                    {% ifchanged %}
+                        <li><strong>Не все поля заполнены.</strong></li>
+                    {% else %}
+                    {% endifchanged %}
+                {% endif %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert-error-form">
+                    <li><strong>{{ error|escape }}</strong></li>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}
