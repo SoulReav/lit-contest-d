@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 from site_news import views as site_news
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^avatar/', include('avatar.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', views.index, name='index'),
     url(r'^news/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)//?$', site_news.news_full_description, name='full_description_news'),
     url(r'^comments/', include('site_comments.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

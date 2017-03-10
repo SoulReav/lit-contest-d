@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     #WYSIWYG editor
     'tinymce',
 
+    #django-avatar
+    'avatar',
+
     #lit_contest apps
     'site_news',
     'site_comments',
@@ -83,6 +86,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
                 'django.template.context_processors.static',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -158,7 +162,8 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
 
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -174,4 +179,6 @@ TINYMCE_COMPRESSOR = True
 
 #allauth settings
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
+
 
