@@ -1,0 +1,72 @@
+{% for comment in comments %}
+
+
+    <div id="comment">
+
+        <div>
+
+            <img src="img/icon.jpg"></img>
+
+            <p><h6><b>Автор:</b> {{ comment.user.username }} <b>|</b> {{ comment.dateCreated }} <b>|</b></h6></p>
+            <hr>
+            <p>{{ comment.comment }}</p>
+
+        </div>
+
+
+    </div>
+
+{% endfor %}
+
+{% if user.is_authenticated %}
+
+
+    <div id="post_comment_form">
+
+        <form method="POST" action="{% url "comments_post" %}">
+            {% csrf_token %}
+            <h5>Оставить комментарий: </h5>
+
+            <textarea placeholder="Ваш текст." style="width:100%;" id="comments" class="comment_text_area"
+                      name="comment-text"></textarea>
+            <input type="hidden" name="url_page" value="{{ url }}">
+
+            <button type="submit" class="btn btn-warning">Отправить комментарий</button>
+
+        </form>
+    </div>
+
+    <script>
+        $(function () {
+            var txt = $('#comments'),
+                hiddenDiv = $(document.createElement('div')),
+                content = null;
+
+            txt.addClass('txtstuff');
+            hiddenDiv.addClass('hiddendiv common');
+
+            $('body').append(hiddenDiv);
+
+            txt.on('keyup', function () {
+
+                content = $(this).val();
+
+                content = content.replace(/\n/g, '<br>');
+                hiddenDiv.html(content + '<br class="lbr">');
+
+                $(this).css('height', hiddenDiv.height());
+
+            });
+        });
+    </script>
+
+
+
+{% else %}
+
+    <div id="not_auth">
+        <p>Вы не авторизованы! Вы не можете комментировать эту запись. Войдите под своим именем, или пройдите процедуру
+            регистрации.</p>
+    </div>
+
+{% endif %}

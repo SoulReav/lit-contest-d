@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', views.index, name='index'),
-    url(r'^news/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)//?$', site_news.news_full_description, name ='full_description_news'),
+    url(r'^news/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)//?$', site_news.news_full_description, name='full_description_news'),
+    url(r'^comments/', include('site_comments.urls')),
 ]

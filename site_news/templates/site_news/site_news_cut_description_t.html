@@ -7,11 +7,11 @@
                 <h4> {{ news.title }} </h4>
 
                 <!-- Информация о посте для нормальных разрешений -->
-                <div id="t" class="post-info">
+                <div class="post-info">
 
-                    <div id="i"><span class="label label-warning">{{ news.categories.name }}</span><h5 class="inline-h5">&nbsp;{{ news.dateCreated|date:"DATE_FORMAT" }}</h5></div>
+                    <div id="inline_block"><span class="label label-warning">{{ news.categories.name }}</span><h5 id="inline_block">&nbsp;{{ news.dateCreated|date:"DATE_FORMAT" }}</h5></div>
 
-                    <div id="i"><h5 style="margin-right:22px;">Опубликовал: <a href="">{{ news.author.username }}</a></h5></div>
+                    <div id="inline_block"><h5 style="margin-right:22px;">Опубликовал: <a href="">{{ news.author.username }}</a></h5></div>
 
                 </div>
 
@@ -38,7 +38,7 @@
             </div>
 
             <div id="more" style="float: right;margin-right:22px; margin-bottom: 2px; margin-top: 2px;" >
-                <a href="{% url 'full_description_news' news.dateCreated.year news.dateCreated.month news.dateCreated.day news.id %}"><h6 id="links">Читать дальше...</h6></a>
+                <a href="{% url 'full_description_news' news.dateCreated.year news.dateCreated.month news.dateCreated.day news.id %}#full_news"><h6 id="links">Читать дальше...</h6></a>
             </div>
 
         </div>

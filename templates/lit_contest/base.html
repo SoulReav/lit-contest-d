@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{% static "./css/social-likes_birman.css" %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static "./js/jquery.bxslider.min.js" %}"></script>
+
 
 </head>
 <body>
@@ -64,8 +67,8 @@
 
 
             <div class="col-md-6">
-
-                <ul class="bxslider">
+                <div class="bxslider-block" >
+                <ul class="bxslider" >
                     <li>
                         <div class="contest-desc">
                             <div id="contest-desc-text">
@@ -82,7 +85,7 @@
                     </li>
                     <li><img src="{% static "./images/contest_logo2.jpg" %}"/></li>
                 </ul>
-
+                </div>
             </div>
             <div class="col-md-3 ">
                 <div class="bs-callout bs-callout-danger">
@@ -159,15 +162,17 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 <script src="{% static "./js/social-likes.min.js" %}"></script>
 <script src="{% static "./js/bootstrap.min.js" %}"></script>
 <!-- bxSlider Javascript file -->
-<script src="{% static "./js/jquery.bxslider.min.js" %}"></script>
+
 
 <script>
     $(document).ready(function () {
+
         $('.bxslider').bxSlider();
+
     });
 </script>
 

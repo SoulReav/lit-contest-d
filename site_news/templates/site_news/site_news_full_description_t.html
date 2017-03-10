@@ -1,16 +1,19 @@
 {% extends 'lit_contest/base.html' %}
 
+{% load site_comments_tags %}
+
 {% block site_news %}
+        <a name="full_news"></a>
         <div class="post-news">
             <div class="post-title">
                 <h4> {{ news.title }} </h4>
 
                 <!-- Информация о посте для нормальных разрешений -->
-                <div id="t" class="post-info">
+                <div class="post-info">
 
-                    <div id="i"><span class="label label-warning">{{ news.categories.name }}</span><h5 class="inline-h5">&nbsp;{{ news.dateCreated }}</h5></div>
+                    <div id="inline_block"><span class="label label-warning">{{ news.categories.name }}</span><h5 id="inline_block">&nbsp;{{ news.dateCreated }}</h5></div>
 
-                    <div id="i"><h5 style="margin-right:22px;">Опубликовал: <a href="">{{ news.author.username }}</a></h5></div>
+                    <div id="inline_block"><h5 style="margin-right:22px;">Опубликовал: <a href="">{{ news.author.username }}</a></h5></div>
 
                 </div>
 
@@ -37,4 +40,7 @@
             </div>
 
         </div>
+
+    {% show_site_comments %}
+
 {% endblock %}

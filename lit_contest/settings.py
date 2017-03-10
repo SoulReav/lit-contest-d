@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     #lit_contest apps
     'site_news',
+    'site_comments',
 ]
 
 SITE_ID = 2
@@ -81,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'django.template.context_processors.static',
             ],
         },
     },
