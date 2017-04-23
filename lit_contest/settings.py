@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'site_news',
     'site_comments',
     'user_profile',
+    'contest',
 ]
 
 SITE_ID = 2

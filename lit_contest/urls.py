@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^news/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)//?$', site_news.news_full_description, name='full_description_news'),
     url(r'^comments/', include('site_comments.urls')),
     url(r'^accounts/', user_profile.show_profile, name='user_profile'),
+    url(r'^contest/', include('contest.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
