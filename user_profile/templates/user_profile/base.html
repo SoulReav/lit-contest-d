@@ -38,13 +38,13 @@
                 <li><a href="#">ТЕКУЩИЕ КОНКУРСЫ</a></li>
                 <li><a href="#">АРХИВ КОНКУРСОВ</a></li>
                 <li>
-                    {% if not u_auth %}
+                    {% if u_auth %}
                         <form action="/accounts/login/">
                             <button class="btn btn-primary navbar-btn" href="login"><span class="glyphicon glyphicon-log-in"
                                                                                           aria-hidden="true"></span> &#160;&#160;Войти&#160;&#160;
                             </button>
                         </form>
-                        {% else %}
+                    {% else %}
                             <form action="/accounts/logout/">
                             <button class="btn btn-primary navbar-btn" href="login"><span class="glyphicon glyphicon-log-in"
                                                                                           aria-hidden="true"></span> &#160;&#160;Выйти&#160;&#160;
@@ -63,50 +63,17 @@
         <div class="row">
 
 
-            <div class="col-md-4">
+            <div class="col-md-2">
 
             </div>
 
-            <div class="col-md-4">
-                <div class="reg-panel">
-                    <img id="reg-icon" src="{% static "images/edit.png" %}" width="8%"><h5>УЧАСТВУЙ В КОНКУРСАХ!</h5>
-                    <hr class="hr-sep">
-                    {% block body %}
+            <div class="col-md-8">
+
                         {% block content %}
                         {% endblock %}
-                    {% endblock %}
-                    {% block extra_body %}
-                    {% endblock %}
-
-                    <hr>
-                    <p>ИЛИ ВОЙДИ ЧЕРЕЗ: </p>
-                    <span><i class="fa fa-vk" style="font-size:24px;color:#c0a375"></i>&#160;&#160;&#160;<i
-                            class="fa fa-twitter" style="font-size:24px;color:#c0a375"></i>&#160;&#160;&#160;<i
-                            class="fa fa-facebook-official" style="font-size:24px;color:#c0a375"></i></span>
-                </div>
             </div>
 
-
-            <div class="col-md-4">
-                {% load i18n %}
-
-                {% block head_title %}{% trans "Signup" %}{% endblock %}
-
-
-                <h1>{% trans "Sign Up" %}</h1>
-
-                <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>
-                    .{% endblocktrans %}</p>
-
-                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    {% if redirect_field_value %}
-                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                    {% endif %}
-                    <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-                </form>
-
+            <div class="col-md-2">
 
             </div>
         </div>
@@ -131,6 +98,9 @@
 <script>
     $(document).ready(function () {
         $('.bxslider').bxSlider();
+        $("#id_avatar").change(function() {
+                $("#avatar-update").submit();
+            })
     });
 </script>
 

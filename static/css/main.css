@@ -280,3 +280,166 @@ body {
     margin-bottom: 5px;
 
 }
+
+.profile-info {
+    background-color: aliceblue;
+    padding: 20px;
+    padding-bottom: 10px;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 4px 2px -2px gray;
+
+}
+
+.profile-bar > ul > li > a {
+    border-radius: 0px;
+    color: #9d9d9d;
+    background-color: #282828;
+
+}
+
+.profile-bar > ul > li > a:hover {
+    background-color: #282828;
+    color: white;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: #c0a375;
+    display: flex;
+}
+.profile-bar > ul {
+    background-color: #282828;
+}
+
+.profile-bar > ul > li > a:focus {
+    background-color: #282828;
+}
+
+.glyphicon-info-sign {
+    font-size: 14pt;
+    position: static;
+    display: inherit;
+    margin-right: 5px;
+}
+
+
+.avatar-block {
+    float: left;
+}
+
+.file-upload {
+     margin-top: 15px;
+     position: relative; /* Даем возможность делать позиционирование, внутри данного элемента */
+     overflow: hidden; /* Все что выходит за пределы - скрываем */
+     width: 110px; /* Задаем ширину кнопки выбора файла */
+     height: 35px; /* Задаем высоту кнопки выбора файла */
+     background: #c0a375;
+     padding: 8px 4px;
+     color: #fff;
+     text-align: center;
+}
+.file-upload:hover {
+     background: #7aad55;
+}
+.file-upload input[type="file"]{
+    display: none; /* Обязательно скрываем настоящий Input File */
+}
+.file-upload label {
+     /* Растягиваем label на всю возможную площадь блока .file-upload */
+     display: block;
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     cursor: pointer;
+     font-weight: 500;
+}
+.file-upload span {
+     line-height: 34px; /* Делаем вертикальное выравнивание текста, который написан на кнопке */
+}
+
+#user_avatar {
+    margin-left: 5px;
+}
+
+.profile-button {
+    vertical-align: middle;
+}
+
+.info-block {
+    float: left;
+}
+
+.info-block-right {
+    float: right;
+}
+
+.item-info {
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+.item-info h5 {
+    color: cadetblue;
+    display: block;
+}
+
+.item-info h4 {
+    color: cadetblue;
+    display: block;
+}
+
+.item-info-inline {
+    text-align: right;
+}
+
+.item-info-inline h5 {
+    color: cadetblue;
+    display: inline-block;
+}
+
+.item-info-inline h4 {
+    color: cadetblue;
+    display: inline-block;
+
+}
+
+
+.item-social {
+    margin-right: 25px;
+    margin-bottom: 20px;
+}
+
+.item-social h5 h4 {
+    color: cadetblue;
+}
+
+.social-links {
+    width: 25px;
+}
+
+.edit-btn {
+    float: right;
+}
+
+.icon-edit {
+    display: inline-block;
+    color: black;
+    font-size: small;
+}
+
+.user_name_form {
+    display: inline-block;
+    list-style-type: none;
+    padding-top: 8px;
+}
+
+.user_name_form ul {
+    list-style-type: none;
+}
+
+.user_name_form li {
+
+}

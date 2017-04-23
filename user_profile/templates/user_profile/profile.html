@@ -1,0 +1,68 @@
+{% extends "user_profile/base.html" %}
+{% load i18n avatar_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="profile-bar">
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a class="profile-button " href="#"><span class="glyphicon glyphicon-info-sign" ></span> Основная информация  </a></li>
+            <li role="presentation"><a href="#">Произведения автора</a></li>
+        </ul>
+
+        <div class="profile-info">
+
+            <div class="avatar-block">
+                {% avatar user 100 class="img-circle img-responsive" id="user_avatar" %}
+                {% if not avatars %}
+                    <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+                {% endif %}
+                <form id="avatar-update" enctype="multipart/form-data" method="POST" action="{% url 'upload_avatar' %}">
+                    <div class="file-upload">
+                         <label>
+                             <input id="id_avatar" name="avatar" type="file"  >
+                             <span class="glyphicon glyphicon-upload"></span>
+                             <span>Загрузить</span>
+                         </label>
+                    </div>
+
+                    <p>{% csrf_token %}<input type="submit" class="btn btn-primary hidden" value="{% trans "Upload New Image" %}"/></p>
+                </form>
+            </div>
+
+            {% block info_profile %}
+                <div class="info-block">
+                    <div class="item-info" id="username"><h4>Имя пользователя: <a class="icon-edit glyphicon glyphicon-pencil" href="{% url 'edit_name' %}"></a>
+                    </h4>{{ full_name }}(<b>{{ user }}</b>)
+                    </div>
+
+                    <div class="social-block">
+                        <div class="item-info"><h5>В социальных сетях: <a class="icon-edit glyphicon glyphicon-pencil"></a></h5><a
+                                href="https://vk.com/sreav"></a>
+
+                            <span>
+                                <img class="social-links" src="{% static "./images/vkontakte.png" %}">&#160;
+                                <img class="social-links" src="{% static "./images/twitter.png" %}">&#160;
+                                <img class="social-links" src="{% static "./images/facebook.png" %}">&#160;
+                                <img class="social-links" src="{% static "./images/odnoklassniki.png" %}">
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="info-block-right">
+                    <table>
+                        <tr>
+                            <td class="item-info-inline" id="date_reg"><h5>Дата регистрации: </h5></td>
+                            <td>&#160;06.03.2017 г.</td>
+                        </tr>
+                    </table>
+                </div>
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+{% endblock %}

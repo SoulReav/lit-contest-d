@@ -56,11 +56,12 @@ INSTALLED_APPS = [
     #lit_contest apps
     'site_news',
     'site_comments',
+    'user_profile',
 ]
 
 SITE_ID = 2
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,6 +107,8 @@ DATABASES = {
     }
 }
 
+USE_TZ=True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -134,6 +137,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 
 )
+
+AUTH_PROFILE_MODULE = 'lit_contest.UserProfile'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -180,5 +185,5 @@ TINYMCE_COMPRESSOR = True
 #allauth settings
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
-
-
+#django-avatar
+AVATAR_AUTO_GENERATE_SIZES = (80, 100)

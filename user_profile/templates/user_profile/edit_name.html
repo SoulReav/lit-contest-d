@@ -1,0 +1,27 @@
+{% extends "user_profile/profile.html" %}
+{% load staticfiles %}
+
+{% block info_profile %}
+    <form class="user_name_form" method="post" action="{% url 'edit_name' %}">
+        {% csrf_token %}
+        <ul>
+            <li>
+                <span>
+                    <input id="element_1_1" name="first_name" class="form-control" maxlength="255" size="8" value="" placeholder="Имя">
+                </span>
+                <br>
+                <span>
+                    <input id="element_1_2" name="last_name" class="form-control" maxlength="255" size="14" value="" placeholder="Фамилия">
+                </span>
+            </li>
+                <br>
+            <li class="buttons">
+                <input type="hidden" name="form_id" value="20363">
+
+                <button id="saveForm" class="btn btn-primary" type="submit" name="submit">
+                    <span class="glyphicon glyphicon-floppy-save"></span> Сохранить
+                </button>
+            </li>
+        </ul>
+    </form>
+{% endblock %}
