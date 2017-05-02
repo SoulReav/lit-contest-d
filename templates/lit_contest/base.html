@@ -69,27 +69,28 @@
             <div class="col-md-6">
                 <div class="bxslider-block" >
                 <ul class="bxslider" >
+                    {% for contest in contests %}
                     <li>
                         <div class="contest-desc">
                             <div id="contest-desc-text">
-                                <span><H4>Название конкурса:</H4> Ограбление!</span>
-                                <span><h4>Жанр:</h4> Детектив.</span>
-                                <span><h4>Описание:</h4> Попробуем себя в жанре детектива? </span>
-                                <span><h4>Дата завершения:</h4> 06.03.2017</span>
+                                <span><H4>Название конкурса:</H4>{{ contest.title }}</span>
+                                <span><h4>Жанр:</h4> {{ contest.genre }}</span>
+                                <span><h4>Описание:</h4> {{  contest.sliderDescription  }} </span>
+                                <span><h4>Дата завершения:</h4> {{ contest.startDate }}</span>
                             </div>
                         </div>
 
-                        <img src="{% static "./images/contest_logo1.jpg" %}"/>
-
+                        <img src="{{ contest.mainLogo.url }}"/>
 
                     </li>
-                    <li><img src="{% static "./images/contest_logo2.jpg" %}"/></li>
+                    {% endfor %}
                 </ul>
                 </div>
             </div>
             <div class="col-md-3 ">
                 <div class="bs-callout bs-callout-danger">
                     <h5><b>ВПЕРВЫЕ У НАС?</b></h5>
+
                     <p><b>LIT-CONTEST.RU</b> - портал, посвященный литературным конкурсам. Если вы любите писать,
                         читать, а также обсуждать хорошие истории, то вы попали по адресу. </p>
                     <br>

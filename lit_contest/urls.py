@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from . import views
 from site_news import views as site_news
+from contest import views as contest
 from user_profile import views as user_profile
 
 urlpatterns = [

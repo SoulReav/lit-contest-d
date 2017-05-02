@@ -14,7 +14,16 @@
     <link href="{% static "./css/jquery.bxslider.css" %}" rel="stylesheet"/>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{% static "./css/social-likes_birman.css" %}">
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="{% static "./js/tinymce/tinymce.min.js" %}"></script>
+  <script>
+  tinymce.init({
+      selector: 'textarea',
+      language: 'ru'
+  });
+  </script>
 
 
 </head>
@@ -101,8 +110,10 @@
         $("#id_avatar").change(function() {
                 $("#avatar-update").submit();
             })
+
     });
 </script>
+
 
 </body>
 </html>

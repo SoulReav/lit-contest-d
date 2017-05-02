@@ -1,0 +1,72 @@
+{% extends "lit_contest/base_clear.html" %}
+{% load i18n avatar_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="profile-bar">
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a class="profile-button " href="#"><span class="glyphicon glyphicon-info-sign" ></span> Информация о конкурсе  </a></li>
+        </ul>
+
+        <div class="contest-info">
+            <h2 id="contest-title" class="light-font"><b class="green-text">{{ contest.title|slice:":1" }}</b>{{ contest.title|slice:"1:" }}</h2>
+            <hr>
+            <img src="{% static "./images/contest_logo_mini.jpg" %}" class="img-responsive img-title-contest">
+            <div class="contest-date">
+                <p class="label label-success">Дата старта конкурса:</p> {{ contest.startdate }}
+                <p></p>
+                <p class="label label-danger">Дата завершения конкурса:</p> {{ contest.enddate }}
+            </div>
+            <hr>
+            <h4 id="contest-desc-title" class="green-text light-font"><b>Описание конкурса</b></h4>
+            {% autoescape off %}
+                {{ contest.description }}
+            {% endautoescape %}
+            <hr>
+            <h4 id="contest-demands" class="green-text light-font"><b>Обязательные требования</b></h4>
+            <ul>
+                <li>
+                    Первое требование
+                </li>
+                <li>
+                    Второе требование
+                </li>
+                <li>
+                    Третье требование
+                </li>
+            </ul>
+            <hr>
+            <h4 id="contest-light-demands" class="green-text light-font"><b>Приветствуется</b></h4>
+            <ul>
+                <li>
+                    Первое требование
+                </li>
+                <li>
+                    Второе требование
+                </li>
+                <li>
+                    Третье требование
+                </li>
+            </ul>
+
+            <hr>
+
+            <h5 class="green-text"> Поделитесь информацией о конкурсе в социальных сетях!</h5>
+
+            <textarea></textarea>
+
+            <div class="social-likes"  style="float: left;margin-top: 1px;" data-counters="no" data-url="http://{{ request.META.HTTP_HOST }}">
+                <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>
+                <div class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</div>
+                <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</div>
+                <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</div>
+                <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+{% endblock %}

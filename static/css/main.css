@@ -289,7 +289,17 @@ body {
     height: 100%;
     width: 100%;
     box-shadow: 0 4px 2px -2px gray;
+}
 
+.contest-info {
+    background-color: aliceblue;
+    padding: 40px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 4px 2px -2px gray;
 }
 
 .profile-bar > ul > li > a {
@@ -442,4 +452,42 @@ body {
 
 .user_name_form li {
 
+}
+
+.light-font {
+   font-family: 'Bad Script', cursive;
+}
+
+#contest-title {
+    padding-left: 20px;
+
+}
+
+.green-text {
+    color: cadetblue;
+}
+
+#contest-desc-title {
+    padding-left: 20px;
+}
+
+#contest-demands {
+    padding-left: 20px;
+}
+
+#contest-light-demands {
+    padding-left: 20px;
+}
+
+.img-title-contest {
+    display:block; margin:0 auto;
+}
+
+.contest-date {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.contest-info hr {
+    margin: 10px;
 }
