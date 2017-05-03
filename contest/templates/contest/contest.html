@@ -5,19 +5,113 @@
 {% block content %}
     <div class="profile-bar">
         <ul class="nav nav-pills" role="tablist">
-            <li role="presentation" class="active"><a class="profile-button" href="#"><span class="glyphicon glyphicon-info-sign" ></span> Информация о конкурсе  </a></li>
-            <li role="presentation" ><a class="profile-button"  href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span class="glyphicon glyphicon-ok"></span> Предложить свою работу! </a></li>
+            <li role="presentation" class="active"><a class="profile-button" href="#"><span
+                    class="glyphicon glyphicon-info-sign"></span> Информация о конкурсе </a></li>
+        {% if contest.stage == 'CT' %}
+            {% if get_in_c %}
+            <li role="presentation"><a class="profile-button"
+                                       href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
+                    class="glyphicon glyphicon-ok"></span> Предложить свою работу! </a></li>
+            {% else %}
+            {% endif %}
+        {% else %}
+            {% if uploaded %}
+            <li role="presentation"><a class="profile-button"
+                                   href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
+                class="glyphicon glyphicon-ok"></span> Страница вашей работы. </a></li>
+            {% endif %}
+        {% endif %}
         </ul>
 
         <div class="contest-info">
-            <h2 id="contest-title" class="light-font"><b class="green-text">{{ contest.title|slice:":1" }}</b>{{ contest.title|slice:"1:" }}</h2>
+
+            <h2 id="contest-title" class="light-font"><b
+                    class="green-text">{{ contest.title|slice:":1" }}</b>{{ contest.title|slice:"1:" }}</h2>
+
             <hr>
             <img src="{% static "./images/contest_logo_mini.jpg" %}" class="img-responsive img-title-contest">
-            <div class="contest-date">
+
+            {% if contest.stage == 'CT' %}
                 <h3>Этап 1: Регистрация и сбор работ к участию.</h3>
+            {% elif contest.stage == 'MD' %}
+                <h3>Этап 2: Проверка работ модератором.</h3>
+            {% elif contest.stage == 'VT' %}
+                <h3>Этап 3: Голосование за лучшую работу</h3>
+            {% elif contest.stage == 'CM' %}
+                <h3>Этап 4: Конкурс завершен. Итоговая таблица победителей.</h3>
+            {% endif %}
+            <div class="contest-date">
                 <p class="label label-success"><b>Дата старта конкурса:</b> {{ contest.startDate }}</p>
-                <p  class="label label-danger">Дата завершения конкурса: {{ contest.endDate }}</p>
+                <p class="label label-danger">Дата завершения конкурса: {{ contest.endDate }}</p>
             </div>
+
+            <br>
+            {% if contest.stage == 'CT' %}
+                {% if not get_in_c %}
+                    <form class="form_get_in" role="form" method="POST"
+                          action="{% url 'get_in_contest' contest.id %}"> {% csrf_token %}
+                            <button type="submit" class="btn btn-info" style="float: left;margin-right: 10px;padding: 8px;">Участвовать!</button>
+                        <span >Перед тем как подать свою работу на конкурс необходимо зарегистрироваться в конкурсе как возможный участник.</span>
+                    </form>
+                {% else %}
+                    <form class="form_get_in" role="form" method="POST"
+                          action="{% url 'leave_contest' contest.id %}"> {% csrf_token %}
+                            <button type="submit" class="btn btn-info">Выйти из состава участников</button>
+                    </form>
+                {% endif %}
+            {% elif contest.stage == 'MD' %}
+                {% if public_md == True %}
+                    <p>Ваша работа прошла проверку модератора. Ожидайте этапа голосования. </p>
+                {% elif public_md == False %}
+                    <p style="color: red">К сожалению модератор отклонил вашу работу на этапе проверки.</p>
+                {% elif public_md == None %}
+                    <p>Ваша работа ожидает проверки модератором.</p>
+                {% endif %}
+            {% elif contest.stage == 'VT' %}
+                <h5>Проголосуйте за лучшие работы.</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <th>#</th>
+                        <th>Название работы</th>
+                        <th>Автор</th>
+                        <th>Ваша оценка</th>
+                    </thead>
+                    {% for contest.work %}
+                    <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                На рыбалке
+                            </td>
+                            <td>
+                                admin
+                            </td>
+                            <td>
+                                5
+                            </td>
+                        </tr>
+                    <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                На рыбалке
+                            </td>
+                            <td>
+                                admin
+                            </td>
+                            <td>
+                                5
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            {% elif contest.stage == 'CM' %}
+                <p>Итоговая таблица</p>
+            {% endif %}
             <hr>
             <h4 id="contest-desc-title" class="green-text"><b>Описание конкурса</b></h4>
             {% autoescape off %}
@@ -53,32 +147,22 @@
             <hr>
 
             <h4 id="contest-light-demands" class="green-text"><b>Участники конкурса:</b></h4>
-                <ul>
-                    <li>
-                        Первое требование
-                    </li>
-                    <li>
-                        Второе требование
-                    </li>
-                    <li>
-                        Третье требование
-                    </li>
-                </ul>
-
+            {% for user in contestants %}
+                {% avatar user 80 class="img-circle img-responsive" id="user_avatar" style="display:inline;" %}
+            {% endfor %}
             <hr>
 
             <h5 class="green-text"> Поделитесь информацией о конкурсе в социальных сетях!</h5>
 
 
-
-            <div class="social-likes"  style="float: left;margin-top: 1px;" data-counters="no" data-url="http://{{ request.META.HTTP_HOST }}">
+            <div class="social-likes" style="float: left;margin-top: 1px;" data-counters="no"
+                 data-url="http://{{ request.META.HTTP_HOST }}">
                 <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>
                 <div class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</div>
                 <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</div>
                 <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</div>
                 <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</div>
             </div>
-
 
 
         </div>

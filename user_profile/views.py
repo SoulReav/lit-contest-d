@@ -19,7 +19,7 @@ def show_profile(request):
 
 
 def upload_avatar(request):
-    if not request.User.is_authenticated() is None:
+    if not request.user.is_authenticated() is None:
         avatar, avatars = _get_avatars(request.user)
         context = {
             'avatar': avatar,

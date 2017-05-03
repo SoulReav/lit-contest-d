@@ -15,8 +15,9 @@ class Work(models.Model):
     title = models.CharField(max_length=140)
     author = models.ForeignKey(User, verbose_name='Автор')
     text_work = HTMLField(verbose_name='Текст работы')
-    public = models.BooleanField(verbose_name='Опубликована?')
+    public = models.NullBooleanField(verbose_name='Опубликована?', null=True, blank=True,)
     uploaded_date = models.DateTimeField(auto_now_add=True)
+    raiting_work = models.IntegerField(verbose_name='Рейтинг', default=0)
 
 
 # Create your models here.
