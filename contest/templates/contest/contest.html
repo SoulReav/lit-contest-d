@@ -5,7 +5,8 @@
 {% block content %}
     <div class="profile-bar">
         <ul class="nav nav-pills" role="tablist">
-            <li role="presentation" class="active"><a class="profile-button " href="#"><span class="glyphicon glyphicon-info-sign" ></span> Информация о конкурсе  </a></li>
+            <li role="presentation" class="active"><a class="profile-button" href="#"><span class="glyphicon glyphicon-info-sign" ></span> Информация о конкурсе  </a></li>
+            <li role="presentation" ><a class="profile-button"  href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span class="glyphicon glyphicon-ok"></span> Предложить свою работу! </a></li>
         </ul>
 
         <div class="contest-info">
@@ -13,17 +14,17 @@
             <hr>
             <img src="{% static "./images/contest_logo_mini.jpg" %}" class="img-responsive img-title-contest">
             <div class="contest-date">
-                <p class="label label-success">Дата старта конкурса:</p> {{ contest.startdate }}
-                <p></p>
-                <p class="label label-danger">Дата завершения конкурса:</p> {{ contest.enddate }}
+                <h3>Этап 1: Регистрация и сбор работ к участию.</h3>
+                <p class="label label-success"><b>Дата старта конкурса:</b> {{ contest.startDate }}</p>
+                <p  class="label label-danger">Дата завершения конкурса: {{ contest.endDate }}</p>
             </div>
             <hr>
-            <h4 id="contest-desc-title" class="green-text light-font"><b>Описание конкурса</b></h4>
+            <h4 id="contest-desc-title" class="green-text"><b>Описание конкурса</b></h4>
             {% autoescape off %}
                 {{ contest.description }}
             {% endautoescape %}
             <hr>
-            <h4 id="contest-demands" class="green-text light-font"><b>Обязательные требования</b></h4>
+            <h4 id="contest-demands" class="green-text"><b>Обязательные требования</b></h4>
             <ul>
                 <li>
                     Первое требование
@@ -36,7 +37,7 @@
                 </li>
             </ul>
             <hr>
-            <h4 id="contest-light-demands" class="green-text light-font"><b>Приветствуется</b></h4>
+            <h4 id="contest-light-demands" class="green-text"><b>Приветствуется</b></h4>
             <ul>
                 <li>
                     Первое требование
@@ -48,12 +49,27 @@
                     Третье требование
                 </li>
             </ul>
+
+            <hr>
+
+            <h4 id="contest-light-demands" class="green-text"><b>Участники конкурса:</b></h4>
+                <ul>
+                    <li>
+                        Первое требование
+                    </li>
+                    <li>
+                        Второе требование
+                    </li>
+                    <li>
+                        Третье требование
+                    </li>
+                </ul>
 
             <hr>
 
             <h5 class="green-text"> Поделитесь информацией о конкурсе в социальных сетях!</h5>
 
-            <textarea></textarea>
+
 
             <div class="social-likes"  style="float: left;margin-top: 1px;" data-counters="no" data-url="http://{{ request.META.HTTP_HOST }}">
                 <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>

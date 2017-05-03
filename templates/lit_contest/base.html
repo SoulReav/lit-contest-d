@@ -76,8 +76,10 @@
                                 <span><H4>Название конкурса:</H4>{{ contest.title }}</span>
                                 <span><h4>Жанр:</h4> {{ contest.genre }}</span>
                                 <span><h4>Описание:</h4> {{  contest.sliderDescription  }} </span>
-                                <span><h4>Дата завершения:</h4> {{ contest.startDate }}</span>
+                                <span><h4>Дата завершения:</h4> {{ contest.startDate }}  </span>
+                                <a href="{% url 'contest_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}" class="btn btn-primary" id="read_more" role="button">Подробнее...</a>
                             </div>
+
                         </div>
 
                         <img src="{{ contest.mainLogo.url }}"/>

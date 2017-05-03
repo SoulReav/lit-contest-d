@@ -21,7 +21,11 @@
   <script>
   tinymce.init({
       selector: 'textarea',
-      language: 'ru'
+      language: 'ru',
+      height: 500,
+      theme: 'modern',
+      skin: 'custom',
+
   });
   </script>
 
@@ -110,6 +114,9 @@
         $("#id_avatar").change(function() {
                 $("#avatar-update").submit();
             })
+        $("#recomend").click(function () {
+            $("#recomend_ul").toggle("slow");
+        });
 
     });
 </script>

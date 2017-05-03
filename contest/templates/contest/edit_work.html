@@ -1,0 +1,52 @@
+{% extends "lit_contest/base_clear.html" %}
+{% load i18n avatar_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="profile-bar">
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a class="profile-button" style="background-color: #282828;"
+                                                      href="{% url 'contest_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
+                    class="glyphicon glyphicon-info-sign"></span> Информация о конкурсе </a></li>
+            <li role="presentation" class="active"><a class="profile-button" href="#"><span
+                    class="glyphicon glyphicon-ok" style="color: white"></span> Предложить свою работу! </a></li>
+        </ul>
+
+        <div class="contest-info">
+
+            <form class="form" role="form" method="POST" action="{% url 'public_work' contest.id %}"> {% csrf_token %}
+                <button type="submit" style="float: right;" class="btn btn-info">Опубликовать</button>
+                <h2>Панель для отправки работы</h2>
+
+                <hr>
+                <div class="form-group">
+
+                    <p>Перед вами редактор текста, которым вы можете воспользоваться для написания \ публикации к
+                        конкурсу своей работы. </p>
+                    <p>Перед публикацией просмотрите <u><b><a id="recomend" style="color: red;" href="#">рекомендации</a></b></u> к вашей работе.</p>
+                    <ul id="recomend_ul" style="display: none;">
+                        <li>
+                            Не используйте в форме HTML теги. Воспользуйтесь инструментами для форматирования
+                            встроенными в редактор.
+                        </li>
+                        <li>
+                            Ограничений по объему текста нет (если они напрямую не указанны в условии конкурса), но
+                            постарайтесь не растягивать свою работу до размеров книги, дабы жюри смогли найти время
+                            прочесть вашу работу в полном объеме.
+                        </li>
+                        <li>
+                            Для того чтобы представить вашу работу на конкурс необходимо нажать кнопку "Опубликовать". В
+                            день завершения сбора работ отменить публикацию будет не возможно.
+                        </li>
+                    </ul>
+                    <input name="title" class="form-control" maxlength="255" size="50" value="" placeholder="Название работы">
+                    <hr>
+                    <textarea name="text_work"></textarea>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+{% endblock %}
