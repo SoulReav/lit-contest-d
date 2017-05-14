@@ -1,9 +1,10 @@
 from django.conf.urls import include, url
-from .views import contest_page, edit_work_page, public_work, delete_work, get_in_contest, leave_contest
+from .views import contest_page, edit_work_page, public_work, delete_work, get_in_contest, leave_contest, read_work_page
 
 urlpatterns = [
         url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)//?$', contest_page, name='contest_page'),
         url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)/edit_work//?$', edit_work_page, name='edit_work_page'),
+        url(r'^read_work/(?P<author>[a-zA-Z][a-zA-Z0-9-_\.]{1,20})/(?P<id>\d+)//?$', read_work_page, name='read_work_page'),
         url(r'public_work/(?P<id>\d+)//?$', public_work, name='public_work'),
         url(r'delete_work/(?P<id>\d+)//?$', delete_work, name='delete_work'),
         url(r'get_in_contest/(?P<id>\d+)//?$', get_in_contest, name='get_in_contest'),

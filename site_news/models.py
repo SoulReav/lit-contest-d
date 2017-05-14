@@ -16,7 +16,7 @@ class Categories(models.Model):
 
 class News(models.Model):
     title = models.CharField(max_length=140, verbose_name='Заголовок новости')
-    description = HTMLField()
+    description = HTMLField(verbose_name='Описание конкурса')
     dateCreated = models.DateTimeField(verbose_name='Дата публикации')
     author = models.ForeignKey(User, verbose_name='Автор')
     publish = models.BooleanField(verbose_name='Опубликованно?')

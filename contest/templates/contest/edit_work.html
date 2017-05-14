@@ -13,53 +13,68 @@
         </ul>
 
         <div class="contest-info">
-            {% if not uploaded %}
-                <form class="form" role="form" method="POST"
-                      action="{% url 'public_work' contest.id %}"> {% csrf_token %}
-                    <button type="submit" style="float: right;" class="btn btn-info">Опубликовать</button>
-                    <h2>Панель для отправки работы</h2>
+            {% if contest.stage == 'CT' %}
+                {% if not uploaded %}
+                    <form class="form" role="form" method="POST"
+                          action="{% url 'public_work' contest.id %}"> {% csrf_token %}
+                        <button type="submit" style="float: right;" class="btn btn-info">Опубликовать</button>
+                        <h2>Панель для отправки работы</h2>
 
-                    <hr>
-                    <div class="form-group">
-
-                        <p>Перед вами редактор текста, которым вы можете воспользоваться для написания \ публикации к
-                            конкурсу своей работы. </p>
-                        <p>Перед публикацией просмотрите <u><b><a id="recomend" style="color: red;" href="#">рекомендации</a></b></u>
-                            к вашей работе.</p>
-                        <ul id="recomend_ul" style="display: none;">
-                            <li>
-                                Не используйте в форме HTML теги. Воспользуйтесь инструментами для форматирования
-                                встроенными в редактор.
-                            </li>
-                            <li>
-                                Ограничений по объему текста нет (если они напрямую не указанны в условии конкурса), но
-                                постарайтесь не растягивать свою работу до размеров книги, дабы жюри смогли найти время
-                                прочесть вашу работу в полном объеме.
-                            </li>
-                            <li>
-                                Для того чтобы представить вашу работу на конкурс необходимо нажать кнопку
-                                "Опубликовать". В
-                                день завершения сбора работ отменить публикацию будет не возможно.
-                            </li>
-                        </ul>
-                        <input name="title" class="form-control" maxlength="255" size="50" value=""
-                               placeholder="Название работы">
                         <hr>
-                        <textarea name="text_work"></textarea>
-                    </div>
-                </form>
+                        <div class="form-group">
+
+                            <p>Перед вами редактор текста, которым вы можете воспользоваться для написания \ публикации к
+                                конкурсу своей работы. </p>
+                            <p>Перед публикацией просмотрите <u><b><a id="recomend" style="color: red;" href="#">рекомендации</a></b></u>
+                                к вашей работе.</p>
+                            <ul id="recomend_ul" style="display: none;">
+                                <li>
+                                    Не используйте в форме HTML теги. Воспользуйтесь инструментами для форматирования
+                                    встроенными в редактор.
+                                </li>
+                                <li>
+                                    Ограничений по объему текста нет (если они напрямую не указанны в условии конкурса), но
+                                    постарайтесь не растягивать свою работу до размеров книги, дабы жюри смогли найти время
+                                    прочесть вашу работу в полном объеме.
+                                </li>
+                                <li>
+                                    Для того чтобы представить вашу работу на конкурс необходимо нажать кнопку
+                                    "Опубликовать". В
+                                    день завершения сбора работ отменить публикацию будет не возможно.
+                                </li>
+                            </ul>
+                            <input name="title" class="form-control" maxlength="255" size="50" value=""
+                                   placeholder="Название работы">
+                            <hr>
+                            <textarea name="text_work"></textarea>
+                        </div>
+                    </form>
+                {% else %}
+                    <form class="form" role="form" method="POST"
+
+                          action="{% url 'delete_work' contest.id %}"> {% csrf_token %}
+                        {% if contest.stage == 'CT' %}
+                            <button type="submit" style="float: right;" class="btn btn-info">Отменить публикацию</button>
+                        {% endif %}
+                        <h2 class="green-text">Спасибо за участие!</h2>
+                        <hr>
+                        <p>Ваша работа принята к рассмотрению. Содержание вашей работы будет проверенно модератором.</p>
+                        <p>Сбор работ к конкурсу завершится <b style="color: red;">{{ contest.endDate }}</b></p>
+                        <p>Вы всегда можете отменить публикацию вашего текста до истечения срока сдачи работ.</p>
+                    </form>
+                {% endif %}
             {% else %}
-                <form class="form" role="form" method="POST"
-                      action="{% url 'delete_work' contest.id %}"> {% csrf_token %}
-                    <button type="submit" style="float: right;" class="btn btn-info">Отменить публикацию</button>
+                {% if not uploaded %}
+                    <h2>Панель для отправки работы</h2>
+                    <p>К сожалению сроки сдачи работ к кокурсу подошли к концу. Вы сможете участвовать в других конкурсах.</p>
+                {% else %}
                     <h2 class="green-text">Спасибо за участие!</h2>
                     <hr>
                     <p>Ваша работа принята к рассмотрению. Содержание вашей работы будет проверенно модератором.</p>
                     <p>Сбор работ к конкурсу завершится <b style="color: red;">{{ contest.endDate }}</b></p>
                     <p>Вы всегда можете отменить публикацию вашего текста до истечения срока сдачи работ.</p>
-                </form>
+                {% endif %}
             {% endif %}
-
         </div>
 
     </div>

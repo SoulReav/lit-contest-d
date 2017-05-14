@@ -7,20 +7,20 @@
         <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active"><a class="profile-button" href="#"><span
                     class="glyphicon glyphicon-info-sign"></span> Информация о конкурсе </a></li>
-        {% if contest.stage == 'CT' %}
-            {% if get_in_c %}
-            <li role="presentation"><a class="profile-button"
-                                       href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
-                    class="glyphicon glyphicon-ok"></span> Предложить свою работу! </a></li>
+            {% if contest.stage == 'CT' %}
+                {% if get_in_c %}
+                    <li role="presentation"><a class="profile-button"
+                                               href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
+                            class="glyphicon glyphicon-ok"></span> Предложить свою работу! </a></li>
+                {% else %}
+                {% endif %}
             {% else %}
+                {% if uploaded %}
+                    <li role="presentation"><a class="profile-button"
+                                               href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
+                            class="glyphicon glyphicon-ok"></span> Страница вашей работы. </a></li>
+                {% endif %}
             {% endif %}
-        {% else %}
-            {% if uploaded %}
-            <li role="presentation"><a class="profile-button"
-                                   href="{% url 'edit_work_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"><span
-                class="glyphicon glyphicon-ok"></span> Страница вашей работы. </a></li>
-            {% endif %}
-        {% endif %}
         </ul>
 
         <div class="contest-info">
@@ -50,13 +50,15 @@
                 {% if not get_in_c %}
                     <form class="form_get_in" role="form" method="POST"
                           action="{% url 'get_in_contest' contest.id %}"> {% csrf_token %}
-                            <button type="submit" class="btn btn-info" style="float: left;margin-right: 10px;padding: 8px;">Участвовать!</button>
-                        <span >Перед тем как подать свою работу на конкурс необходимо зарегистрироваться в конкурсе как возможный участник.</span>
+                        <button type="submit" class="btn btn-info" style="float: left;margin-right: 10px;padding: 8px;">
+                            Участвовать!
+                        </button>
+                        <span>Перед тем как подать свою работу на конкурс необходимо зарегистрироваться в конкурсе как возможный участник.</span>
                     </form>
                 {% else %}
                     <form class="form_get_in" role="form" method="POST"
                           action="{% url 'leave_contest' contest.id %}"> {% csrf_token %}
-                            <button type="submit" class="btn btn-info">Выйти из состава участников</button>
+                        <button type="submit" class="btn btn-info">Выйти из состава участников</button>
                     </form>
                 {% endif %}
             {% elif contest.stage == 'MD' %}
@@ -66,51 +68,222 @@
                     <p style="color: red">К сожалению модератор отклонил вашу работу на этапе проверки.</p>
                 {% elif public_md == None %}
                     <p>Ваша работа ожидает проверки модератором.</p>
+                {% elif public_md == 'NotParticipate'%}
+                    <p>К сожалению вы не участвовали в этом конкурсе.</p>
                 {% endif %}
             {% elif contest.stage == 'VT' %}
-                <h5>Проголосуйте за лучшие работы.</h5>
-                <table class="table table-striped">
-                    <thead>
-                        <th>#</th>
-                        <th>Название работы</th>
-                        <th>Автор</th>
-                        <th>Ваша оценка</th>
-                    </thead>
-                    {% for contest.work %}
-                    <tbody>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                На рыбалке
-                            </td>
-                            <td>
-                                admin
-                            </td>
-                            <td>
-                                5
-                            </td>
-                        </tr>
-                    <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                На рыбалке
-                            </td>
-                            <td>
-                                admin
-                            </td>
-                            <td>
-                                5
-                            </td>
-                        </tr>
-                    </tbody>
+                {% if public_md == True %}
 
-                </table>
+                    {% if vote.voted == False or vote == None %}
+                        {% if works|length == 1  %}
+                            <h5>Проголосуйте за лучшие работы.</h5>
+                            <form class="form_vote" role="form" method="POST"
+                                  action="{% url 'contest_page' contest.startDate.year contest.startDate.month contest.startDate.day contest.id %}"> {% csrf_token %}
+
+                                <table class="table table-striped">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Название работы</th>
+                                    <th>Автор</th>
+                                    <th>Ваша оценка</th>
+                                    </thead>
+
+
+                                    <tbody>
+                                        {% for i in works %}
+                                            <tr>
+                                                <td>
+                                                    {{ forloop.counter }}
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'read_work_page' i.author i.id %}">{{ i.title }}</a>
+                                                </td>
+                                                <td>
+                                                    {{ i.author }}
+                                                </td>
+                                                <td>
+                                                    <select name="select_points_{{ forloop.counter }}" class="form-control">
+                                                        {% for j in works %}
+                                                            <option>{{ forloop.counter }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                </table>
+                                <span style="display: flex;">
+                                {% if error == 'VoteIncorrect' %}
+                                    <h5>Кажется вы не правильно распределили места в голосовании.<br>
+                                        Номера <b>не должны</b> повторяться.</h5>
+                                {% endif %}
+
+                                    <button type="submit" class="btn btn-info"
+                                            style="display: block; margin-left: auto;margin-right: 0.4em;margin-top: auto;margin-bottom: auto;">
+                                    Проголосовать!
+
+                                </button>
+                            </span>
+
+                            </form>
+                        {% else %}
+                            <h5>К сожалению вы единственный участник конкурса.</h5>
+                            <p>Таблица представленных работ</p>
+                            <table class="table table-striped">
+                                <thead>
+                                <th>#</th>
+                                <th>Название работы</th>
+                                <th>Автор</th>
+                                <th>Текущая оценка</th>
+                                </thead>
+
+
+                                <tbody>
+                                {% for i in table_works %}
+                                    <tr>
+                                        <td>
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'read_work_page' i.author i.id %}">{{ i.title }}</a>
+                                        </td>
+                                        <td>
+                                            {{ i.author }}
+                                        </td>
+                                        <td>
+                                            1
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    {% else %}
+                        <h5>Спасибо за участие! Ожидайте результатов голосования.</h5>
+                        <p>Таблица представленных работ</p>
+                        <table class="table table-striped">
+                                <thead>
+                                <th>#</th>
+                                <th>Название работы</th>
+                                <th>Автор</th>
+                                <th>Текущая оценка</th>
+                                </thead>
+
+
+                                <tbody>
+                                {% for i in table_works %}
+                                    <tr>
+                                        <td>
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'read_work_page' i.author i.id %}">{{ i.title }}</a>
+                                        </td>
+                                        <td>
+                                            {{ i.author }}
+                                        </td>
+                                        <td>
+                                            {{ i.raiting_work }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                    {% endif %}
+                {% elif public_md == False or public_md == None %}
+                    <p style="color: red">К сожалению модератор отклонил вашу работу на этапе проверки.</p>
+                    <p>Таблица представленных работ</p>
+                    <table class="table table-striped">
+                                <thead>
+                                <th>#</th>
+                                <th>Название работы</th>
+                                <th>Автор</th>
+                                <th>Текущая оценка</th>
+                                </thead>
+
+
+                                <tbody>
+                                {% for i in table_works %}
+                                    <tr>
+                                        <td>
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'read_work_page' i.author i.id %}">{{ i.title }}</a>
+                                        </td>
+                                        <td>
+                                            {{ i.author }}
+                                        </td>
+                                        <td>
+                                            {{ i.raiting_work }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                {% elif  public_md == 'NotParticipate' %}
+                    <p>Таблица представленных работ</p>
+                    <table class="table table-striped">
+                                <thead>
+                                <th>#</th>
+                                <th>Название работы</th>
+                                <th>Автор</th>
+                                <th>Текущая оценка</th>
+                                </thead>
+
+
+                                <tbody>
+                                {% for i in table_works %}
+                                    <tr>
+                                        <td>
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'read_work_page' i.author i.id %}">{{ i.title }}</a>
+                                        </td>
+                                        <td>
+                                            {{ i.author }}
+                                        </td>
+                                        <td>
+                                            {{ i.raiting_work }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                {% endif %}
             {% elif contest.stage == 'CM' %}
+
+
                 <p>Итоговая таблица</p>
+                <table class="table table-striped">
+                <thead>
+                <th>#</th>
+                <th>Название работы</th>
+                <th>Автор</th>
+                <th>Текущая оценка</th>
+                </thead>
+
+
+                <tbody>
+                {% for i in table_works %}
+                    <tr>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
+                            <a href="{% url 'read_work_page' i.author i.id %}">{{ i.title }}</a>
+                        </td>
+                        <td>
+                            {{ i.author }}
+                        </td>
+                        <td>
+                            {{ i.raiting_work }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
             {% endif %}
             <hr>
             <h4 id="contest-desc-title" class="green-text"><b>Описание конкурса</b></h4>

@@ -1,0 +1,24 @@
+{% extends "lit_contest/base_clear.html" %}
+{% load i18n avatar_tags %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div id="flipbook">
+        <div class="hard"> Turn.js </div>
+        <div class="hard"></div>
+        {% autoescape off %}
+            {% for i in text_work %}
+                <div class="page">
+                    {{ i }}
+                </div>
+            {% endfor %}
+        {% endautoescape %}
+
+        <div class="hard"></div>
+        <div class="hard"></div>
+    </div>
+
+    </div>
+
+{% endblock %}
