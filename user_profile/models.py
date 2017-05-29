@@ -8,6 +8,11 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=14, verbose_name='Имя')
     last_name = models.CharField(max_length=20, verbose_name='Фамилия')
     user = models.OneToOneField(User, verbose_name='Пользователь', related_name='profile')
+    vk_url = models.URLField(verbose_name='Профиль в VK', null=True,)
+    twitter_url = models.URLField(verbose_name='Профиль в Twitter', null=True,)
+    ok_url = models.URLField(verbose_name='Профиль в Ok', null=True,)
+    fb_url = models.URLField(verbose_name='Профиль в FaceBook', null=True,)
+    about = models.CharField(max_length=140, null=True, verbose_name='О себе')
 
     def __str__(self):
         return self.first_name + self.last_name

@@ -19,7 +19,9 @@ def contest_page(request, year, month, day, id):
 
         uploaded = False
         works = contest.works.filter(public=True)
-        works = works.exclude(author=request.user)
+        if request.user.is_authenticated():
+            works = works.exclude(author=request.user)
+
         table_works = contest.works.filter(public=True)
         public_md = None
 
@@ -33,7 +35,10 @@ def contest_page(request, year, month, day, id):
 
         error = None
         try:
-            vote = Vote.objects.get(author=request.user, contest=contest)
+            if request.user.is_authenticated():
+                vote = Vote.objects.get(author=request.user, contest=contest)
+            else:
+                vote = None
         except ObjectDoesNotExist:
             vote = None
 
@@ -42,7 +47,7 @@ def contest_page(request, year, month, day, id):
             max_points = 0
 
             try:
-                vote = contest.votes.get(author=request.user)
+                vote = Vote.objects.get(author=request.user, contest=contest)
             except ObjectDoesNotExist:
                 for i, work in enumerate(works.all()):
                     points += int(request.POST['select_points_' + str(i+1)])
@@ -55,9 +60,8 @@ def contest_page(request, year, month, day, id):
                     for i, work in enumerate(works.all()):
                         work.raiting_work += int(request.POST['select_points_' + str(i+1)])
                         work.save()
-                    vote = Vote(author=request.user, voted=True, )
+                    vote = Vote(author=request.user, voted=True, contest=contest )
                     vote.save()
-                    contest.votes.add(vote)
 
         return render(request, 'contest/contest.html', {'contest': contest, 'get_in_c': get_in_c,
                                                         'contestants': contestants, 'uploaded': uploaded,
@@ -80,7 +84,7 @@ def edit_work_page(request, year, month, day, id):
     return render(request, 'contest/edit_work.html', {'contest': contest, 'uploaded': uploaded, })
 
 def cut(s):
-    step = 550
+    step = 750
     return [s[i:i + step] for i in range(0, len(s), step)]
 
 

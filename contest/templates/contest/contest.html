@@ -292,29 +292,15 @@
             {% endautoescape %}
             <hr>
             <h4 id="contest-demands" class="green-text"><b>Обязательные требования</b></h4>
-            <ul>
-                <li>
-                    Первое требование
-                </li>
-                <li>
-                    Второе требование
-                </li>
-                <li>
-                    Третье требование
-                </li>
-            </ul>
+            {% autoescape off %}
+                {{ contest.terms }}
+            {% endautoescape %}
             <hr>
-            <h4 id="contest-light-demands" class="green-text"><b>Приветствуется</b></h4>
+            <h4 id="contest-light-demands" class="green-text"><b>Дополнительная информация</b></h4>
             <ul>
-                <li>
-                    Первое требование
-                </li>
-                <li>
-                    Второе требование
-                </li>
-                <li>
-                    Третье требование
-                </li>
+               {% autoescape on %}
+                {{ contest.extra }}
+            {% endautoescape %}
             </ul>
 
             <hr>

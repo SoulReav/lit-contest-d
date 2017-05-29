@@ -5,15 +5,22 @@
 {% block content %}
 
     <div id="flipbook">
-        <div class="hard"> Turn.js </div>
+        <div class="hard" style="text-align: center;">
+            <h3 style="margin-top: 100px;">Автор работы:</h3> {{ work.author }}
+            <h3>Название работы:</h3> {{ work.title }}
+        </div>
         <div class="hard"></div>
-        {% autoescape off %}
+
             {% for i in text_work %}
+                {% autoescape off %}
                 <div class="page">
+                    <div id="text_book">
                     {{ i }}
+                    </div>
                 </div>
+                {% endautoescape %}
             {% endfor %}
-        {% endautoescape %}
+
 
         <div class="hard"></div>
         <div class="hard"></div>

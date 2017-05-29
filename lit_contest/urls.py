@@ -17,10 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from . import views
 from site_news import views as site_news
-from contest import views as contest
-from user_profile import views as user_profile
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,9 +25,8 @@ urlpatterns = [
     url(r'^avatar/', include('avatar.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/', include('user_profile.urls')),
-    url(r'^$', views.index, name='index'),
-    url(r'^news/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<id>\d+)//?$', site_news.news_full_description, name='full_description_news'),
+    url(r'^news/', include('site_news.urls')),
     url(r'^comments/', include('site_comments.urls')),
-    url(r'^accounts/', user_profile.show_profile, name='user_profile'),
     url(r'^contest/', include('contest.urls')),
+    url(r'^$', site_news.news_cut_description, name='news_cut_description'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
